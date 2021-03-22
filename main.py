@@ -44,7 +44,6 @@ class dimming1(threading.Thread):
                 self.dimming = self.dimming+1
                 self.offtime = 10000 - (100*self.dimming)
             time.sleep(0.01)
-            self.zero_crossing()
 
 class dimming2(threading.Thread):
 
@@ -80,6 +79,5 @@ class dimming2(threading.Thread):
                 self.dimming = self.dimming+1
                 self.offtime = 10000 - (100*self.dimming)
             time.sleep(0.01)
-            self.zero_crossing()
 
 dim1, dim2 = dimming1(0).start(), dimming2(100).start()
