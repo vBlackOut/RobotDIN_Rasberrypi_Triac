@@ -18,8 +18,8 @@ class PWM1(threading.Thread):
         self.dimming = 0
         self.targetdimming = dimming
         self.status = 0
-        super(dimming1, self).__init__()
         GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
+        super(PWM1, self).__init__()
 
     def zero_crossing(self):
         if self.dimming == 100:
@@ -54,8 +54,8 @@ class PWM2(threading.Thread):
         self.dimming = 0
         self.targetdimming = dimming
         self.status = 0
-        super(dimming2, self).__init__()
         GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
+        super(PWM2, self).__init__()
 
     def zero_crossing(self):
         if self.dimming == 100:
