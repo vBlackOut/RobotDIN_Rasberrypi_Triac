@@ -16,7 +16,7 @@ class PWM1(threading.Thread):
         self.pwm = 18
         self.zc = 6
         self.dimming = 0
-        self.targetdimming = dimming
+        self.frequency = dimming
         self.status = 0
         GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
         super(PWM1, self).__init__()
@@ -36,13 +36,15 @@ class PWM1(threading.Thread):
 
     def run(self):
         while 1:
-            if self.targetdimming < self.dimming:
+            if self.frequency < self.dimming:
                 self.dimming = self.dimming - 1
                 self.offtime = 10000 - (100*self.dimming)
-            elif self.targetdimming > self.dimming:
+            elif self.frequency > self.dimming:
                 self.dimming = self.dimming+1
                 self.offtime = 10000 - (100*self.dimming)
             time.sleep(0.01)
+            if self.status == "stop":
+                break
             #self.zero_crossing()
 
 class PWM2(threading.Thread):
@@ -52,7 +54,7 @@ class PWM2(threading.Thread):
         self.pwm = 19
         self.zc = 6
         self.dimming = 0
-        self.targetdimming = dimming
+        self.frequency = dimming
         self.status = 0
         GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
         super(PWM2, self).__init__()
@@ -71,13 +73,22 @@ class PWM2(threading.Thread):
 
     def run(self):
         while 1:
-            if self.targetdimming < self.dimming:
+            if self.frequency < self.dimming:
                 self.dimming = self.dimming - 1
                 self.offtime = 10000 - (100*self.dimming)
-            elif self.targetdimming > self.dimming:
+            elif self.frequency > self.dimming:
                 self.dimming = self.dimming+1
                 self.offtime = 10000 - (100*self.dimming)
             time.sleep(0.01)
+            if self.status == "stop":
+                break
             #self.zero_crossing()
 
-PWM1, PWM2 = PWM1(0).start(), PWM2(100).start()
+# initial by frequency
+PWM1, PWM2 = PWM1(0), PWM2(0)
+PWM1.start()
+time.sleep(1)
+# change frequency
+PWM1.frequency = 60
+# stop process
+PWM1.status = "stop"
