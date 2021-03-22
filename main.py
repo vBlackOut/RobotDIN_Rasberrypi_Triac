@@ -11,12 +11,12 @@ GPIO.setup(6, GPIO.IN)
 
 class PWM1(threading.Thread):
 
-    def __init__(self, dimming):
+    def __init__(self, frequency):
         self.offtime = 10000
         self.pwm = 18
         self.zc = 6
         self.dutycycle = 0
-        self.frequency = dimming
+        self.frequency = frequency
         self.status = 0
         GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
         super(PWM1, self).__init__()
@@ -45,16 +45,15 @@ class PWM1(threading.Thread):
             time.sleep(0.01)
             if self.status == "stop":
                 break
-            #self.zero_crossing()
 
 class PWM2(threading.Thread):
 
-    def __init__(self, dimming):
+    def __init__(self, frequency):
         self.offtime = 10000
         self.pwm = 19
         self.zc = 6
         self.dutycycle = 0
-        self.frequency = dimming
+        self.frequency = frequency
         self.status = 0
         GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
         super(PWM2, self).__init__()
@@ -82,7 +81,6 @@ class PWM2(threading.Thread):
             time.sleep(0.01)
             if self.status == "stop":
                 break
-            #self.zero_crossing()
 
 # initial by frequency
 PWM1, PWM2 = PWM1(0), PWM2(0)
