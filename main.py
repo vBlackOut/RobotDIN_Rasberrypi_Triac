@@ -19,7 +19,7 @@ class dimming1(threading.Thread):
         self.targetdimming = dimming
         self.status = 0
         super(dimming1, self).__init__()
-        GPIO.add_event_detect(self.zc, GPIO.RISING, callback=zero_crossing)
+        GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
 
     def zero_crossing(self):
         if self.dimming == 100:
@@ -56,7 +56,7 @@ class dimming2(threading.Thread):
         self.targetdimming = dimming
         self.status = 0
         super(dimming2, self).__init__()
-        GPIO.add_event_detect(self.zc, GPIO.RISING, callback=zero_crossing)
+        GPIO.add_event_detect(self.zc, GPIO.RISING, callback=self.zero_crossing)
 
     def zero_crossing(self):
         if self.dimming == 100:
