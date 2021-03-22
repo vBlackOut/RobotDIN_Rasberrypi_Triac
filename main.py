@@ -9,7 +9,7 @@ GPIO.setup(18, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 GPIO.setup(6, GPIO.IN)
 
-class dimming1(threading.Thread):
+class PWM1(threading.Thread):
 
     def __init__(self, dimming):
         self.offtime = 10000
@@ -34,7 +34,6 @@ class dimming1(threading.Thread):
             GPIO.output(self.pwm, GPIO.LOW)
             self.status = self.offtime/100000
 
-
     def run(self):
         while 1:
             if self.targetdimming < self.dimming:
@@ -44,8 +43,9 @@ class dimming1(threading.Thread):
                 self.dimming = self.dimming+1
                 self.offtime = 10000 - (100*self.dimming)
             time.sleep(0.01)
+            #self.zero_crossing()
 
-class dimming2(threading.Thread):
+class PWM2(threading.Thread):
 
     def __init__(self, dimming):
         self.offtime = 10000
@@ -69,7 +69,6 @@ class dimming2(threading.Thread):
             GPIO.output(self.pwm, GPIO.LOW)
             self.status = self.offtime/100000
 
-
     def run(self):
         while 1:
             if self.targetdimming < self.dimming:
@@ -79,5 +78,6 @@ class dimming2(threading.Thread):
                 self.dimming = self.dimming+1
                 self.offtime = 10000 - (100*self.dimming)
             time.sleep(0.01)
+            #self.zero_crossing()
 
-dim1, dim2 = dimming1(0).start(), dimming2(100).start()
+PWM1, PWM2 = PWM1(0).start(), PWM2(100).start()
