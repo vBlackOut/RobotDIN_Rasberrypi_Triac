@@ -6,10 +6,10 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-  "bufio"
-  "strconv"
+        "bufio"
+        "strconv"
 	"github.com/warthog618/gpio"
-  "strings"
+        "strings"
 )
 
 
