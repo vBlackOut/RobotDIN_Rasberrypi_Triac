@@ -10,4 +10,11 @@ the script accept to 2 float number in percent
 pwm1 10.8  
 pwm1 10.99  
 pwm1 80.75
+or 
+pwm2 80
+pwm2 65.6
+pwm2 10.87
 ```
+
+## GPIO config
+the script run on zero crossing pin 6  pin 18 [pwm1] and 19 [pwm2]
