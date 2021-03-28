@@ -6,6 +6,6 @@ TRIAC two channel control PWM over raspberry pi Golang
 
 ## Command percent
 the script accept to 2 float number in percent  
-pwm1 10.8  
+'''pwm1 10.8  
 pwm1 10.99  
-pwm1 80.75  
+pwm1 80.75'''
