@@ -6,6 +6,7 @@ TRIAC two channel control PWM over raspberry pi Golang
 
 ## install
 ```
+git clone https://github.com/vBlackOut/RobotDIN_Rasberrypi_Triac
 go get github.com/warthog618/gpio
 ```
 
