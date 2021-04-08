@@ -6,10 +6,10 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-        "bufio"
-        "strconv"
+  "bufio"
+  "strconv"
 	"github.com/warthog618/gpio"
-        "strings"
+  "strings"
 )
 
 
@@ -17,14 +17,19 @@ func getInt(key string) uint32 {
     //s := os.Getenv(key)
     if signals, err := strconv.ParseFloat(key, 32); err == nil {
 
-      if signals <= 100 {
-        signals = 10000-(signals*100)
-      } else if (signals <= 1000) && (signals > 100) {
-        signals = 1000-(signals*10)
-      } else if (signals <= 10000) && (signals > 1000) {
+      if signals < 100 {
+        signals = 9000-(signals*80)
+      } else if (signals < 9000) && (signals > 1000) {
         signals = (signals)
       }
 
+      if signals < 1000 {
+	      signals = 1000
+      }
+
+      if signals >= 9000 {
+	      signals = 9000
+      }
       return uint32(signals)
     }
     return 0
@@ -33,13 +38,18 @@ func getInt(key string) uint32 {
 func getenvInt(key string) uint32 {
     s := os.Getenv(key)
     if signals, err := strconv.ParseFloat(s, 32); err == nil {
-
-      if signals <= 100 {
-        signals = 10000-(signals*100)
-      } else if (signals <= 1000) && (signals > 100) {
-        signals = 1000-(signals*10)
-      } else if (signals <= 10000) && (signals > 1000) {
+			if signals < 100 {
+        signals = 9000-(signals*80)
+      } else if (signals < 9000) && (signals > 1000) {
         signals = (signals)
+      }
+
+      if signals < 1000 {
+	      signals = 1000
+      }
+
+      if signals >= 9000 {
+	      signals = 9000
       }
 
       return uint32(signals)
@@ -69,8 +79,8 @@ func pwm(pins int, pins2 int) (string, error) {
   signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
   defer signal.Stop(quit)
 
-  percent1 := uint32(0)
-  percent2 := uint32(0)
+  percent1 := uint32(9000)
+  percent2 := uint32(9000)
 
   fmt.Println("init pwm process...")
 
@@ -110,28 +120,35 @@ func pwm(pins int, pins2 int) (string, error) {
   input := bufio.NewScanner(os.Stdin)
   for input.Scan() {
     if input.Text() == "stop" {
+			percent1 = uint32(9000)
+			percent2 = uint32(9000)
         break
     } else {
 
-      if strings.Contains(input.Text(), "pwm1") {
+    if strings.Contains(input.Text(), "pwm1") {
         detectpercent := strings.Split(input.Text(), " ")[1]
         percent1 = getInt(detectpercent)
         if percent1 == 10000 {
-          percent1 = 0
-        } else if percent1 == 0 {
           percent1 = 1
         }
-        //fmt.Println("debug:", percent1)
+				if percent1 == 0 {
+          percent1 = 0
+        }
+				fmt.Println("debug:", percent1)
       }
 
       if strings.Contains(input.Text(), "pwm2") {
         detectpercent := strings.Split(input.Text(), " ")[1]
         percent2 = getInt(detectpercent)
         if percent2 == 10000 {
-          percent2 = 0
-        } else if percent2 == 0 {
           percent2 = 1
         }
+				if percent2 == 0 {
+          percent2 = 0
+        }
+				if percent2 >= 95 {
+          percent2 = 1000
+				}
         //fmt.Println("debug:", percent2)
       }
 
