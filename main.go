@@ -11,7 +11,7 @@ import (
   "github.com/warthog618/gpiod"
   "github.com/warthog618/gpiod/device/rpi"
   "strings"
-	"sync"
+  "sync"
 )
 var percent1 = uint32(0)
 var percent2 = uint32(0)
@@ -100,15 +100,15 @@ func pwm(pins int, pins2 int) (string, error) {
 
 	offset := rpi.GPIO6
 	l, err := c.RequestLine(offset,
-		gpiod.WithPullUp,
-		gpiod.WithBothEdges,
-		gpiod.WithEventHandler(eventHandler))
+		                gpiod.WithPullUp,
+	                        gpiod.WithBothEdges,
+                                gpiod.WithEventHandler(eventHandler))
 	if err != nil {
-		fmt.Printf("RequestLine returned error: %s\n", err)
-		if err == syscall.Errno(22) {
-			fmt.Println("Note that the WithPullUp option requires kernel V5.5 or later - check your kernel version.")
-		}
-		os.Exit(1)
+	   fmt.Printf("RequestLine returned error: %s\n", err)
+	   if err == syscall.Errno(22) {
+              fmt.Println("Note that the WithPullUp option requires kernel V5.5 or later - check your kernel version.")
+	   }
+	   os.Exit(1)
 	}
   // In a real application the main thread would do something useful here.
   // But we'll just run for a minute then exit.
