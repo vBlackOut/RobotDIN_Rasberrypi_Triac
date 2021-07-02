@@ -20,9 +20,10 @@ var c, errchip = gpiod.NewChip("gpiochip0")
 func getInt(key string) uint32 {
     //s := os.Getenv(key)
     if signals, err := strconv.ParseFloat(key, 32); err == nil {
-
-      if signals < 100 {
-        signals = 9000-(signals*80)
+      if signals >= 90 {
+	signals = 9000-(signals*80)
+      } else if signals <= 100 {
+        signals = 9000-(signals*100)
       } else if (signals < 9000) && (signals > 1000) {
         signals = (signals)
       }
@@ -98,18 +99,19 @@ func pwm(pins int, pins2 int) (string, error) {
 
   fmt.Println("init pwm process...")
 
-	offset := rpi.GPIO6
-	l, err := c.RequestLine(offset,
-		                gpiod.WithPullUp,
-	                        gpiod.WithBothEdges,
-                                gpiod.WithEventHandler(eventHandler))
-	if err != nil {
-	   fmt.Printf("RequestLine returned error: %s\n", err)
-	   if err == syscall.Errno(22) {
-              fmt.Println("Note that the WithPullUp option requires kernel V5.5 or later - check your kernel version.")
-	   }
-	   os.Exit(1)
-	}
+     offset := rpi.GPIO6
+     l, err := c.RequestLine(offset,
+		             gpiod.WithPullUp,
+	                     gpiod.WithBothEdges,
+                             gpiod.WithEventHandler(eventHandler))
+     if err != nil {
+      fmt.Printf("RequestLine returned error: %s\n", err)
+      if err == syscall.Errno(22) {
+         fmt.Println("Note that the WithPullUp option requires kernel V5.5 or later - check your kernel version.")
+      } 
+     os.Exit(1) 
+  }
+	
   // In a real application the main thread would do something useful here.
   // But we'll just run for a minute then exit.
   fmt.Println("please wait command usage :\n cmd : pwm[1-2] percent[0-100%]\n cmd : [reset] for disable all comand \n cmd : [stop] for quit program ")
