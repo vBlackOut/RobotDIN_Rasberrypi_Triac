@@ -47,7 +47,7 @@ func pwm2defer(wg *sync.WaitGroup, percent2 uint32) {
 
   if ((percent2 >= 1) && (percent2 < 10000))  {
      time.Sleep((time.Duration(percent2) * time.Microsecond))
-     // set value 0
+     // set value 1
      lpwm2.SetValue(1)
      time.Sleep((time.Duration(10) * time.Microsecond))
      // set value 0
@@ -70,7 +70,7 @@ func pwm1defer(wg *sync.WaitGroup,  percent1 uint32) {
 
    if ((percent1 >= 1) && (percent1 < 10000))  {
       time.Sleep((time.Duration(percent1) * time.Microsecond))
-      // set value 0
+      // set value 1
       lpwm1.SetValue(1)
       time.Sleep((time.Duration(10) * time.Microsecond))
       // set value 0
@@ -161,7 +161,7 @@ func pwm(pins int, pins2 int) (string, error) {
   return "", nil
 }
 
-// Watches GPIO 4 (J8 7) and reports when it changes state.
+// Watches GPIO 7 and reports when it changes state.
 func main() {
     pwm(rpi.GPIO16, rpi.GPIO20)
 }
