@@ -35,6 +35,6 @@ pwm2 10.87
 
 ## GPIO config
 the script run on zero crossing pin 6  
-pin 18 [pwm1] and 19 [pwm2]
+pin 16 [pwm1] and 20 [pwm2]
 
 Enjoy
