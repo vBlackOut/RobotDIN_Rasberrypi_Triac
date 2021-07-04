@@ -20,7 +20,7 @@ var c, errchip = gpiod.NewChip("gpiochip0")
 func getInt(key string) uint32 {
     //s := os.Getenv(key)
     if signals, err := strconv.ParseFloat(key, 32); err == nil {
-      if signals >= 90 {
+      if (signals >= 90) && (signals <= 100) {
 	signals = 9000-(signals*80)
       } else if signals <= 100 {
         signals = 9000-(signals*100)
