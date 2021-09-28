@@ -1,4 +1,4 @@
-# RobotDIN_Raspberrypi_Triac
+# RobotDYN_Raspberrypi_Triac
 TRIAC two channel control PWM over raspberry pi Golang
 
 ![run program](https://i.ibb.co/kgsmbGD/Capture-du-2021-03-28-15-54-16.png)
@@ -6,7 +6,7 @@ TRIAC two channel control PWM over raspberry pi Golang
 
 ## install
 ```
-git clone https://github.com/vBlackOut/RobotDIN_Rasberrypi_Triac
+git clone https://github.com/vBlackOut/RobotDYN_Rasberrypi_Triac
 go get github.com/warthog618/gpiod
 ```
 
